@@ -3,6 +3,7 @@ package ru.alekseysapi.weather_kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.alekseysapi.weather_kotlin.databinding.ActivityMainBinding
+import ru.alekseysapi.weather_kotlin.view.weatherlist.WeatherListFragment
 
 internal class MainActivity: AppCompatActivity() {
 
@@ -12,6 +13,9 @@ internal class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         setContentView(binding.activityRoot)
-        binding.btn.text = "Change text"
+
+        if(savedInstanceState==null){
+            supportFragmentManager.beginTransaction().replace(R.id.container, WeatherListFragment.newInstance()).commit()
+        }
     }
 }
