@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.alekseysapi.weather_kotlin.viewmodel.AppState
 import java.lang.Thread.sleep
-import ru.alekseysapi.weather_kotlin.model.Repository
-import ru.alekseysapi.weather_kotlin.model.RepositoryLocalImpl
-import ru.alekseysapi.weather_kotlin.model.RepositoryRemoteImpl
+import ru.alekseysapi.weather_kotlin.model.*
 
 class WeatherListViewModel(private val liveData: MutableLiveData<AppState> = MutableLiveData<AppState>()) :
     ViewModel() {
