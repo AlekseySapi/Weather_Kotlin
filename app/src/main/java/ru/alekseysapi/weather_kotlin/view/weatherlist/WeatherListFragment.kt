@@ -10,12 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ru.alekseysapi.weather_kotlin.databinding.FragmentWeatherListBinding
 import ru.alekseysapi.weather_kotlin.viewmodel.AppState
+import ru.alekseysapi.weather_kotlin.R
 
 class WeatherListFragment : Fragment() {
 
     companion object {
         fun newInstance() = WeatherListFragment()
     }
+
+    var isRussian = true
 
     private var _binding: FragmentWeatherListBinding?= null
     private val binding: FragmentWeatherListBinding
@@ -33,7 +36,7 @@ class WeatherListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentWeatherListBinding.inflate(inflater)
         return binding.root
     }
@@ -47,20 +50,28 @@ class WeatherListFragment : Fragment() {
                 renderData(t)
             }
         })
-        viewModel.sentRequest()
-        viewModel.sentRequest()
+        binding.weatherListFragmentFAB.setOnClickListener {
+            isRussian = !isRussian
+            if(isRussian){
+                viewModel.getWeatherListForRussia()
+                binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_russia)
+            }else{
+                viewModel.getWeatherListForWorld()
+                binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
+            }
+        }
+        viewModel.getWeatherListForRussia()
     }
 
     private fun renderData(appState: AppState){
         when (appState){
             is AppState.Error -> {/*TODO HW*/ }
             AppState.Loading -> {/*TODO HW*/}
-            is AppState.Success -> {
+            is AppState.SuccessOne -> {
                 val result = appState.weatherData
-                binding.cityName.text = result.city.name
-                binding.temperatureValue.text = result.temperature.toString()
-                binding.feelsLikeValue.text = result.feelsLike.toString()
-                binding.cityCoordinates.text = "${result.city.lat}/${result.city.lon}"
+            }
+            is AppState.SuccessMulti ->{
+                binding.mainFragmentRecyclerView.adapter =WeatherListAdapter(appState.weatherList)
             }
         }
     }

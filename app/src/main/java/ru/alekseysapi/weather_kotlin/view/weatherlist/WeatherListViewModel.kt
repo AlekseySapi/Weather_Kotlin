@@ -9,7 +9,8 @@ import ru.alekseysapi.weather_kotlin.model.*
 class WeatherListViewModel(private val liveData: MutableLiveData<AppState> = MutableLiveData<AppState>()) :
     ViewModel() {
 
-    lateinit var repository: Repository
+    lateinit var repositoryMulti: RepositoryMany
+    lateinit var repositoryOne: RepositoryOne
 
     fun getLiveData():MutableLiveData<AppState>{
         choiceRepository()
@@ -17,20 +18,28 @@ class WeatherListViewModel(private val liveData: MutableLiveData<AppState> = Mut
     }
 
     private fun choiceRepository(){
-        repository = if(isConnection()){
+        repositoryOne = if(isConnection()){
             RepositoryRemoteImpl()
         }else{
             RepositoryLocalImpl()
         }
+        repositoryMulti =RepositoryLocalImpl()
     }
 
-    fun sentRequest() {
+    fun getWeatherListForRussia(){
+        sentRequest(Location.Russian)
+    }
+    fun getWeatherListForWorld(){
+        sentRequest(Location.World)
+    }
+
+    private fun sentRequest(location: Location) {
         liveData.value = AppState.Loading
 
-        if((0..3).random()==2){ //FIXME
+        if(false){ //FIXME
             liveData.postValue(AppState.Error(throw IllegalStateException("что-то пошлло не так")))
         }else{
-            liveData.postValue(AppState.Success(repository.getWeather(55.755826, 37.617299900000035)))
+            liveData.postValue(AppState.SuccessMulti(repositoryMulti.getListWeather(location)))
         }
 
     }
