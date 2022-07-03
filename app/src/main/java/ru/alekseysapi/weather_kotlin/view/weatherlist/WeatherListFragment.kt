@@ -8,11 +8,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import android.text.TextUtils.replace
 import ru.alekseysapi.weather_kotlin.databinding.FragmentWeatherListBinding
 import ru.alekseysapi.weather_kotlin.viewmodel.AppState
 import ru.alekseysapi.weather_kotlin.R
+import ru.alekseysapi.weather_kotlin.MainActivity
+import ru.alekseysapi.weather_kotlin.domain.Weather
+import ru.alekseysapi.weather_kotlin.view.details.DetailsFragment
+import ru.alekseysapi.weather_kotlin.view.details.OnItemClick
 
-class WeatherListFragment : Fragment() {
+class WeatherListFragment : Fragment(), OnItemClick {
 
     companion object {
         fun newInstance() = WeatherListFragment()
@@ -71,9 +76,15 @@ class WeatherListFragment : Fragment() {
                 val result = appState.weatherData
             }
             is AppState.SuccessMulti ->{
-                binding.mainFragmentRecyclerView.adapter =WeatherListAdapter(appState.weatherList)
+                binding.mainFragmentRecyclerView.adapter =WeatherListAdapter(appState.weatherList,this)
             }
         }
+    }
+
+    override fun onItemClick(weather: Weather) {
+        requireActivity().supportFragmentManager.beginTransaction().hide(this).add(
+            R.id.container, DetailsFragment.newInstance(weather)
+        ).addToBackStack("").commit()
     }
 
 

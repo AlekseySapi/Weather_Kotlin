@@ -1,16 +1,22 @@
 package ru.alekseysapi.weather_kotlin.domain
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 data class Weather(
     val city: City = getDefaultCity(),
     val temperature: Int = 20,
     val feelsLike: Int = 20
-)
+) : Parcelable
 
+@Parcelize
 data class City(
     val name: String,
     val lat: Double,
     val lon: Double
-)
+) : Parcelable
 
 
 fun getWorldCities(): List<Weather> {
