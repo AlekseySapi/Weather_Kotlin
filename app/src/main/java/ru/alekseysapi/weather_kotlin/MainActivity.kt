@@ -3,7 +3,7 @@ package ru.alekseysapi.weather_kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.alekseysapi.weather_kotlin.databinding.ActivityMainBinding
-import ru.alekseysapi.weather_kotlin.view.weatherlist.WeatherListFragment
+import ru.alekseysapi.weather_kotlin.viewmodel.WeatherListFragment
 
 internal class MainActivity: AppCompatActivity() {
 

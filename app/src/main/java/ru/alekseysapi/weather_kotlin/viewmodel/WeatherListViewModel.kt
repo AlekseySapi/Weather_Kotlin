@@ -1,4 +1,4 @@
-package ru.alekseysapi.weather_kotlin.view.weatherlist
+package ru.alekseysapi.weather_kotlin.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

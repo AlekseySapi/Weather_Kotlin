@@ -1,4 +1,4 @@
-package ru.alekseysapi.weather_kotlin.view.weatherlist
+package ru.alekseysapi.weather_kotlin.viewmodel
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import android.text.TextUtils.replace
 import ru.alekseysapi.weather_kotlin.databinding.FragmentWeatherListBinding
-import ru.alekseysapi.weather_kotlin.viewmodel.AppState
 import ru.alekseysapi.weather_kotlin.R
-import ru.alekseysapi.weather_kotlin.MainActivity
 import ru.alekseysapi.weather_kotlin.domain.Weather
 import ru.alekseysapi.weather_kotlin.view.details.DetailsFragment
 import ru.alekseysapi.weather_kotlin.view.details.OnItemClick
+import ru.alekseysapi.weather_kotlin.view.weatherlist.WeatherListAdapter
 
 class WeatherListFragment : Fragment(), OnItemClick {
 
@@ -76,7 +74,8 @@ class WeatherListFragment : Fragment(), OnItemClick {
                 val result = appState.weatherData
             }
             is AppState.SuccessMulti ->{
-                binding.mainFragmentRecyclerView.adapter =WeatherListAdapter(appState.weatherList,this)
+                binding.mainFragmentRecyclerView.adapter =
+                    WeatherListAdapter(appState.weatherList,this)
             }
         }
     }
