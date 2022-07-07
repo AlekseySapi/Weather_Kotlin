@@ -37,7 +37,7 @@ class WeatherListViewModel(private val liveData: MutableLiveData<AppState> = Mut
         liveData.value = AppState.Loading
 
         if(false){ //FIXME
-            liveData.postValue(AppState.Error(throw IllegalStateException("что-то пошлло не так")))
+            liveData.postValue(AppState.Error(IllegalStateException("что-то пошло не так")))
         }else{
             liveData.postValue(AppState.SuccessMulti(repositoryMulti.getListWeather(location)))
         }
