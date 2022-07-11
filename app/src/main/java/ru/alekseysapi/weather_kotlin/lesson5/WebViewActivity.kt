@@ -12,6 +12,7 @@ import ru.alekseysapi.weather_kotlin.R
 import ru.alekseysapi.weather_kotlin.databinding.ActivityMainBinding
 import ru.alekseysapi.weather_kotlin.databinding.ActivityWebviewBinding
 import ru.alekseysapi.weather_kotlin.viewmodel.WeatherListFragment
+import ru.alekseysapi.weather_kotlin.utils.getLines
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -68,9 +69,7 @@ internal class WebViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLines(reader: BufferedReader): String {
-        return reader.lines().collect(Collectors.joining("\n"))
-    }
+
 
 
 
