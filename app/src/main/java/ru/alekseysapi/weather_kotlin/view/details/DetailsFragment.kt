@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.alekseysapi.weather_kotlin.databinding.FragmentDetailsBinding
 import ru.alekseysapi.weather_kotlin.domain.Weather
+import ru.alekseysapi.model.dto.WeatherDTO
+import ru.alekseysapi.utils.WeatherLoader
 
 class DetailsFragment : Fragment() {
 
@@ -32,13 +34,12 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    // TODO создать DetailsListViewModel + RepositoryRemoteImpl
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val weather=  arguments?.get(BUNDLE_WEATHER_EXTRA)
-        arguments?.apply { }
-        arguments?.also { }
-        arguments?.run { }
+
         val weather = arguments?.let { arg ->
             arg.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
         }
@@ -49,6 +50,8 @@ class DetailsFragment : Fragment() {
         if (weather != null)
             renderData(weather)
     }
+
+    // TODO разобраться в DetailsFragment
 
     private fun renderData(weather: Weather) {
         binding?.apply {
