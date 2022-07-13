@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.alekseysapi.weather_kotlin.databinding.FragmentDetailsBinding
 import ru.alekseysapi.weather_kotlin.domain.Weather
-import ru.alekseysapi.model.dto.WeatherDTO
-import ru.alekseysapi.utils.WeatherLoader
+import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
+import ru.alekseysapi.weather_kotlin.utils.WeatherLoader
+
 
 class DetailsFragment : Fragment() {
-
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding: FragmentDetailsBinding
@@ -34,8 +34,8 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
-    // TODO создать DetailsListViewModel + RepositoryRemoteImpl
 
+    // TODO 5 HW  создать DetailsListViewModel + RepositoryRemoteImpl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -43,37 +43,50 @@ class DetailsFragment : Fragment() {
         val weather = arguments?.let { arg ->
             arg.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
         }
-        val weather2 = arguments?.run {
-            this.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
-            getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
+
+        weather?.let { weatherLocal ->
+
+            WeatherLoader.requestFirstVariant(
+                weatherLocal.city.lat,
+                weatherLocal.city.lon,
+                object : OnResponse{
+                    override fun onResponse(weather: WeatherDTO) {
+
+                    }
+                }
+            )
+
+            WeatherLoader.requestFirstVariant(
+                weatherLocal.city.lat,
+                weatherLocal.city.lon
+            ) { weatherDTO ->
+                bindWeatherLocalWithWeatherDTO(weatherLocal, weatherDTO)
+            }
+            WeatherLoader.requestSecondVariant(
+                weatherLocal.city.lat,
+                weatherLocal.city.lon
+            ) { weatherDTO ->
+                bindWeatherLocalWithWeatherDTO(weatherLocal, weatherDTO)
+            }
         }
-        if (weather != null)
-            renderData(weather)
+
+
     }
 
-    // TODO разобраться в DetailsFragment
+    private fun bindWeatherLocalWithWeatherDTO(
+        weatherLocal: Weather,
+        weatherDTO: WeatherDTO
+    ) {
+        requireActivity().runOnUiThread{
+            renderData(weatherLocal.apply {
+                weatherLocal.feelsLike = weatherDTO.fact.feelsLike
+                weatherLocal.temperature = weatherDTO.fact.temp
+            })
+        }
+    }
 
+    // FIXME диссонанс this - как бы приемник?
     private fun renderData(weather: Weather) {
-        binding?.apply {
-            this.cityName
-            cityName
-        }
-        val resAlso = binding?.also { newIt ->
-            newIt.cityName.text = ""
-            val resLet = binding?.let { bindingMy ->
-                bindingMy.cityName.toString()
-                bindingMy.cityCoordinates.toString()
-            }
-        }
-
-        val resAlso2 = binding?.also { ewsgfweg ->
-            ewsgfweg.cityName.text = ""
-            val resLet = binding?.run {
-                cityName.toString()
-                cityCoordinates.toString()
-            }
-        }
-        val resRun = binding?.run { cityName.toString() }
 
         with(binding) {
             cityName.text = weather.city.name
@@ -92,7 +105,6 @@ class DetailsFragment : Fragment() {
                 putParcelable(BUNDLE_WEATHER_EXTRA, weather)
                 putParcelable(BUNDLE_WEATHER_EXTRA, weather)
             }
-
             fr.arguments = Bundle().also {
                 it.putParcelable(BUNDLE_WEATHER_EXTRA, weather)
                 it.putParcelable(BUNDLE_WEATHER_EXTRA, weather)
@@ -101,6 +113,5 @@ class DetailsFragment : Fragment() {
             return fr
         }
     }
-
 
 }

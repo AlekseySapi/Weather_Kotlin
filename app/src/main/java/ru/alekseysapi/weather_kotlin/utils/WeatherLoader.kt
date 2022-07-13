@@ -1,8 +1,8 @@
 package ru.alekseysapi.weather_kotlin.utils
 
-import ru.alekseysapi.model.dto.WeatherDTO
-import ru.alekseysapi.utils.getLines
-import ru.alekseysapi.view.details.OnResponse
+import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
+import ru.alekseysapi.weather_kotlin.utils.getLines
+import ru.alekseysapi.weather_kotlin.view.details.OnResponse
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
