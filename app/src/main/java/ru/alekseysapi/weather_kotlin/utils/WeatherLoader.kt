@@ -1,7 +1,7 @@
 package ru.alekseysapi.weather_kotlin.utils
 
+import ru.alekseysapi.weather_kotlin.BuildConfig
 import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
-import ru.alekseysapi.weather_kotlin.utils.getLines
 import ru.alekseysapi.weather_kotlin.view.details.OnResponse
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -17,7 +17,7 @@ object WeatherLoader {// TODO HW 5 try catch
 
         myConnection = uri.openConnection() as HttpURLConnection
         myConnection.readTimeout = 5000
-        myConnection.addRequestProperty("X-Yandex-API-Key","ceae3d76-b634-4bfd-8ef5-25a327758ae9")
+        myConnection.addRequestProperty("X-Yandex-API-Key",BuildConfig.WEATHER_API_KEY)
         Thread{
             val reader = BufferedReader(InputStreamReader(myConnection.inputStream))
             val weatherDTO = Gson().fromJson(getLines(reader), WeatherDTO::class.java)
@@ -31,7 +31,7 @@ object WeatherLoader {// TODO HW 5 try catch
 
         myConnection = uri.openConnection() as HttpURLConnection
         myConnection.readTimeout = 5000
-        myConnection.addRequestProperty("X-Yandex-API-Key","ceae3d76-b634-4bfd-8ef5-25a327758ae9")
+        myConnection.addRequestProperty("X-Yandex-API-Key",BuildConfig.WEATHER_API_KEY)
         Thread{
             val reader = BufferedReader(InputStreamReader(myConnection.inputStream))
             val weatherDTO = Gson().fromJson(getLines(reader), WeatherDTO::class.java)

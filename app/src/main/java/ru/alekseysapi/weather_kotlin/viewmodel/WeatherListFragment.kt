@@ -48,12 +48,8 @@ class WeatherListFragment : Fragment(), OnItemClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(WeatherListViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, object : Observer<AppState> {
-            override fun onChanged(t: AppState) {
-                Toast.makeText(requireContext(), "РАБОТАЕТ $t", Toast.LENGTH_LONG).show()
-                renderData(t)
-            }
-        })
+        viewModel.getLiveData().observe(viewLifecycleOwner) { t -> renderData(t) }
+
         binding.weatherListFragmentFAB.setOnClickListener {
             isRussian = !isRussian
             if (isRussian) {
@@ -66,6 +62,7 @@ class WeatherListFragment : Fragment(), OnItemClick {
         }
         viewModel.getWeatherListForRussia()
     }
+
 
     private fun renderData(appState: AppState) {
         when (appState) {
