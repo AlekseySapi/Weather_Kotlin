@@ -27,9 +27,9 @@ class ThreadsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         Log.d("@@@","${Thread.currentThread()}")
         var counter =0
+
 
         binding.button.setOnClickListener {
             Thread{
@@ -43,9 +43,9 @@ class ThreadsFragment : Fragment() {
                         textSize =20f
                     })
                 })
-
             }.start()
         }
+
 
         val mThread =MyThread()
         mThread.start()
@@ -74,7 +74,6 @@ class ThreadsFragment : Fragment() {
             handler = Handler()
             Looper.loop()
         }
-
     }
 
 

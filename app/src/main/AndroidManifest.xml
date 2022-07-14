@@ -29,5 +29,21 @@
             android:name=".lesson5.WebViewActivity"
             android:exported="true">
         </activity>
+
+        <service
+            android:name=".lesson6.MyService"
+            android:exported="true" />
+
+        <receiver
+            android:name=".lesson6.MyBroadCastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+                <action android:name="myaction" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
 </manifest>

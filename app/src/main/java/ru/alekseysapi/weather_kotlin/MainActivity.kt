@@ -1,13 +1,21 @@
 package ru.alekseysapi.weather_kotlin
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ru.alekseysapi.weather_kotlin.lesson6.ThreadsFragment
 import ru.alekseysapi.weather_kotlin.databinding.ActivityMainBinding
 import ru.alekseysapi.weather_kotlin.viewmodel.WeatherListFragment
+import ru.alekseysapi.weather_kotlin.lesson6.BUNDLE_KEY
+import ru.alekseysapi.weather_kotlin.lesson6.MyBroadCastReceiver
+import ru.alekseysapi.weather_kotlin.lesson6.MyService
 
 internal class MainActivity : AppCompatActivity() {
 
@@ -21,6 +29,27 @@ internal class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, WeatherListFragment.newInstance()).commit()
         }
+
+
+        startService(Intent(this,MyService::class.java).apply {
+            putExtra(BUNDLE_KEY,"Hello")
+        })
+
+        val receiver=MyBroadCastReceiver()
+        registerReceiver(receiver, IntentFilter("android.intent.action.AIRPLANE_MODE"))
+        registerReceiver(receiver, IntentFilter("myaction"))
+
+
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                Log.d("@@@"," onReceive ${Thread.currentThread()}")
+            }
+        }, IntentFilter("answer"))
+
+        sendBroadcast(Intent().apply {
+            action = "myaction"
+        })
 
     }
 
