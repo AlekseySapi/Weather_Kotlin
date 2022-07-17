@@ -4,9 +4,9 @@ import android.app.IntentService
 import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import ru.alekseysapi.weather_kotlin.utils.*
 
 
-const val BUNDLE_KEY = "key"
 class MyService:IntentService("") {
 
     override fun onHandleIntent(intent: Intent?) {
@@ -16,7 +16,7 @@ class MyService:IntentService("") {
             Log.d("@@@"," MyService ${it.getStringExtra(BUNDLE_KEY)}")
             Log.d("@@@"," onHandleIntent ${Thread.currentThread()}")
             LocalBroadcastManager.getInstance(this).sendBroadcast(Intent().apply {
-                action = "answer"
+                action
             })
         }
     }
