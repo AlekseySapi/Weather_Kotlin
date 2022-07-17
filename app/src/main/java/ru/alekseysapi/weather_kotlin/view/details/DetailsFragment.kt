@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import ru.alekseysapi.weather_kotlin.databinding.FragmentDetailsBinding
 import ru.alekseysapi.weather_kotlin.domain.Weather
 import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
-import ru.alekseysapi.weather_kotlin.utils.WeatherLoader
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import ru.alekseysapi.weather_kotlin.utils.BUNDLE_CITY_KEY
-import ru.alekseysapi.weather_kotlin.utils.BUNDLE_WEATHER_DTO_KEY
-import ru.alekseysapi.weather_kotlin.utils.WAVE
+import ru.alekseysapi.weather_kotlin.BuildConfig
+import ru.alekseysapi.weather_kotlin.utils.*
+import com.google.gson.Gson
+import okhttp3.Call
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
 
 class DetailsFragment : Fragment() {
@@ -73,6 +75,7 @@ class DetailsFragment : Fragment() {
 
             this.weatherLocal = weatherLocal
 
+            /*
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
                 receiver,
                 IntentFilter(WAVE)
@@ -85,6 +88,33 @@ class DetailsFragment : Fragment() {
                 ).apply {
                     putExtra(BUNDLE_CITY_KEY, weatherLocal.city)
                 })
+
+             */
+
+            val client = OkHttpClient()
+            val builder = Request.Builder()
+            builder.addHeader(YANDEX_API_KEY, BuildConfig.WEATHER_API_KEY)
+            builder.url("https://api.weather.yandex.ru/v2/informers?lat=${weatherLocal.city.lat}&lon=${weatherLocal.city.lon}")
+            val request: Request = builder.build()
+            val call: Call = client.newCall(request)
+            Thread {
+                val response = call.execute()
+                if (response.isSuccessful) {
+                }
+                if (response.code in 200..299) {
+                    response.body?.let {
+                        val responseString = it.string()
+                        val weatherDTO = Gson().fromJson((responseString), WeatherDTO::class.java)
+                        weatherLocal.feelsLike = weatherDTO.fact.feelsLike
+                        weatherLocal.temperature = weatherDTO.fact.temp
+                        requireActivity().runOnUiThread {
+                            renderData(weatherLocal)
+                        }
+                        Log.d("@@@", "${responseString}")
+                        //Log.d("@@@", "${it.string()}") // FIXME что-то странное
+                    }
+                }
+            }.start()
 
         }
 

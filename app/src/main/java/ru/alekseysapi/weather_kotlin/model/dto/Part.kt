@@ -27,7 +27,7 @@ data class Part(
     @SerializedName("prec_prob")
     val precProb: Int,
     @SerializedName("pressure_mm")
-    val pressureMm: Int,
+    val pressureMm: Double,
     @SerializedName("pressure_pa")
     val pressurePa: Int,
     @SerializedName("temp_avg")
