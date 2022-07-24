@@ -2,7 +2,9 @@ package ru.alekseysapi.weather_kotlin.viewmodel.citieslist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.alekseysapi.weather_kotlin.model.*
+import ru.alekseysapi.weather_kotlin.model.Location
+import ru.alekseysapi.weather_kotlin.model.RepositoryCitiesList
+import ru.alekseysapi.weather_kotlin.model.RepositoryCitiesListImpl
 import kotlin.random.Random
 
 class CitiesListViewModel(private val liveData: MutableLiveData<CityListFragmentAppState> = MutableLiveData<CityListFragmentAppState>()) :

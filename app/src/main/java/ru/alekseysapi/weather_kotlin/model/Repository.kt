@@ -1,9 +1,17 @@
 package ru.alekseysapi.weather_kotlin.model
 
 import ru.alekseysapi.weather_kotlin.domain.Weather
+import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
+import java.io.IOException
 
 fun interface RepositoryDetails {
-    fun getWeather(lat: Double, lon: Double):Weather
+    fun getWeather(lat: Double, lon: Double,callback: MyLargeSuperCallback)
+}
+
+
+interface MyLargeSuperCallback{
+    fun onResponse(weatherDTO: WeatherDTO)
+    fun onFailure(e: IOException)
 }
 
 fun interface RepositoryOne {

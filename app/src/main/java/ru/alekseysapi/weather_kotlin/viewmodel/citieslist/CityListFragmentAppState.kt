@@ -1,10 +1,9 @@
 package ru.alekseysapi.weather_kotlin.viewmodel.citieslist
 
-import ru.alekseysapi.weather_kotlin.domain.Weather
+import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
 
-sealed class CityListFragmentAppState {
-    data class SuccessOne(val weatherData: Weather) : CityListFragmentAppState()
-    data class SuccessMulti(val weatherList: List<Weather>) : CityListFragmentAppState()
-    data class Error(val error: Throwable) : CityListFragmentAppState()
-    object Loading : CityListFragmentAppState()
+sealed class DetailsFragmentAppState {
+    data class Success(val weatherData: WeatherDTO) : DetailsFragmentAppState()
+    data class Error(val error: Throwable) : DetailsFragmentAppState()
+    object Loading : DetailsFragmentAppState()
 }
