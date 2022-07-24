@@ -2,8 +2,6 @@ package ru.alekseysapi.weather_kotlin.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.alekseysapi.weather_kotlin.viewmodel.AppState
-import java.lang.Thread.sleep
 import ru.alekseysapi.weather_kotlin.model.*
 import kotlin.random.Random
 

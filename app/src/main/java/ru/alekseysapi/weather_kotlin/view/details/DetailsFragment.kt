@@ -17,18 +17,19 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ru.alekseysapi.weather_kotlin.BuildConfig
 import ru.alekseysapi.weather_kotlin.utils.*
 import com.google.gson.Gson
-import okhttp3.Call
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
+import java.io.IOException
 
 
 class DetailsFragment : Fragment() {
+
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding: FragmentDetailsBinding
         get() {
             return _binding!!
         }
+
 
     val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -48,9 +49,7 @@ class DetailsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,24 +71,20 @@ class DetailsFragment : Fragment() {
         }
 
         weather?.let { weatherLocal ->
-
             this.weatherLocal = weatherLocal
 
-            /*
-            LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
+            /*LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
                 receiver,
                 IntentFilter(WAVE)
             )
-
             requireActivity().startService(
                 Intent(
                     requireContext(),
                     DetailsServiceIntent::class.java
                 ).apply {
                     putExtra(BUNDLE_CITY_KEY, weatherLocal.city)
-                })
+                })*/
 
-             */
 
             val client = OkHttpClient()
             val builder = Request.Builder()
@@ -97,28 +92,32 @@ class DetailsFragment : Fragment() {
             builder.url("https://api.weather.yandex.ru/v2/informers?lat=${weatherLocal.city.lat}&lon=${weatherLocal.city.lon}")
             val request: Request = builder.build()
             val call: Call = client.newCall(request)
-            Thread {
-                val response = call.execute()
-                if (response.isSuccessful) {
+            call.enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    // TODO HW
                 }
-                if (response.code in 200..299) {
-                    response.body?.let {
-                        val responseString = it.string()
-                        val weatherDTO = Gson().fromJson((responseString), WeatherDTO::class.java)
-                        weatherLocal.feelsLike = weatherDTO.fact.feelsLike
-                        weatherLocal.temperature = weatherDTO.fact.temp
-                        requireActivity().runOnUiThread {
-                            renderData(weatherLocal)
+
+                override fun onResponse(call: Call, response: Response) {
+                    //if (response.isSuccessful) { }
+                    if (response.code in 200..299 && response.body != null) {
+                        response.body?.let {
+                            val responseString = it.string()
+                            val weatherDTO =
+                                Gson().fromJson((responseString), WeatherDTO::class.java)
+                            weatherLocal.feelsLike = weatherDTO.fact.feelsLike
+                            weatherLocal.temperature = weatherDTO.fact.temp
+                            requireActivity().runOnUiThread {
+                                renderData(weatherLocal)
+                            }
+                            Log.d("@@@", "${responseString}")
+                            //Log.d("@@@", "${it.string()}") // FIXME что-то странное
                         }
-                        Log.d("@@@", "${responseString}")
-                        //Log.d("@@@", "${it.string()}") // FIXME что-то странное
+                    } else {
+                        // TODO HW
                     }
                 }
-            }.start()
-
+            })
         }
-
-
     }
 
     private fun bindWeatherLocalWithWeatherDTO(
@@ -159,5 +158,6 @@ class DetailsFragment : Fragment() {
             return fr
         }
     }
+
 
 }

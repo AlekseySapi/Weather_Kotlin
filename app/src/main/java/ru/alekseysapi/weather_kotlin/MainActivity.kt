@@ -16,6 +16,7 @@ import ru.alekseysapi.weather_kotlin.viewmodel.WeatherListFragment
 import ru.alekseysapi.weather_kotlin.lesson6.BUNDLE_KEY
 import ru.alekseysapi.weather_kotlin.lesson6.MyBroadCastReceiver
 import ru.alekseysapi.weather_kotlin.lesson6.MyService
+import ru.alekseysapi.weather_kotlin.view.weatherlist.CitiesListFragment
 
 internal class MainActivity : AppCompatActivity() {
 
@@ -27,7 +28,7 @@ internal class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, WeatherListFragment.newInstance()).commit()
+                .replace(R.id.container, CitiesListFragment.newInstance()).commit()
         }
 
 
