@@ -25,6 +25,7 @@ import ru.alekseysapi.weather_kotlin.viewmodel.details.DetailsViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.requestPermissions
+import android.widget.TextView
 
 
 class ContentProviderFragment : Fragment() {
@@ -107,6 +108,17 @@ class ContentProviderFragment : Fragment() {
             null,
             ContactsContract.Contacts.DISPLAY_NAME + " ASC"
         )
+        cursorWithContacts?.let { cursor->
+            for(i in 0 until cursor.count){ // аналог 0..cursorWithContacts.count-1
+                cursor.moveToPosition(i)
+                val name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                binding.containerForContacts.addView(TextView(requireContext()).apply {
+                    text = name
+                    textSize = 25f
+                })
+            }
+        }
+        cursorWithContacts?.close()
     }
 
     override fun onDestroy() {
