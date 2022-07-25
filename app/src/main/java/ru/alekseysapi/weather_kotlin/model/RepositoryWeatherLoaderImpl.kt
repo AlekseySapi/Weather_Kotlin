@@ -1,8 +1,10 @@
 package ru.alekseysapi.weather_kotlin.model
 
 import ru.alekseysapi.weather_kotlin.BuildConfig
+import ru.alekseysapi.weather_kotlin.domain.City
 import ru.alekseysapi.weather_kotlin.model.dto.WeatherDTO
 import ru.alekseysapi.weather_kotlin.utils.YANDEX_API_KEY
+import ru.alekseysapi.weather_kotlin.utils.bindDTOWithCity
 import ru.alekseysapi.weather_kotlin.utils.getLines
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -11,10 +13,10 @@ import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class RepositoryDetailsWeatherLoaderImpl: RepositoryDetails {
-    override fun getWeather(lat: Double, lon: Double, callback: MyLargeSuperCallback) {
+class RepositoryWeatherLoaderImpl: RepositoryWeatherByCity {
+    override fun getWeather(city: City, callback: CommonWeatherCallback) {
         Thread {
-            val uri = URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
+            val uri = URL("https://api.weather.yandex.ru/v2/informers?lat=${city.lat}&lon=${city.lon}")
             var myConnection: HttpsURLConnection? = null
             myConnection = uri.openConnection() as HttpsURLConnection
             try {
@@ -23,7 +25,7 @@ class RepositoryDetailsWeatherLoaderImpl: RepositoryDetails {
 
                 val reader = BufferedReader(InputStreamReader(myConnection.inputStream))
                 val weatherDTO = Gson().fromJson(getLines(reader), WeatherDTO::class.java)
-                callback.onResponse(weatherDTO)
+                callback.onResponse(bindDTOWithCity(weatherDTO,city))
             }catch (e:IOException){
                 callback.onFailure(e)
             }finally {

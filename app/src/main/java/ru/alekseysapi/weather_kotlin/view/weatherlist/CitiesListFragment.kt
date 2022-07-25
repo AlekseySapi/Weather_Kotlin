@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.alekseysapi.weather_kotlin.R
-import ru.alekseysapi.weather_kotlin.databinding.FragmentWeatherListBinding
+import ru.alekseysapi.weather_kotlin.databinding.FragmentCitiesListBinding
 import ru.alekseysapi.weather_kotlin.domain.Weather
 import ru.alekseysapi.weather_kotlin.view.details.DetailsFragment
 import ru.alekseysapi.weather_kotlin.view.details.OnItemClick
@@ -25,8 +25,8 @@ class CitiesListFragment : Fragment(), OnItemClick {
 
     var isRussian = true
 
-    private var _binding: FragmentWeatherListBinding? = null
-    private val binding: FragmentWeatherListBinding
+    private var _binding: FragmentCitiesListBinding? = null
+    private val binding: FragmentCitiesListBinding
         get() {
             return _binding!!
         }
@@ -42,7 +42,7 @@ class CitiesListFragment : Fragment(), OnItemClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWeatherListBinding.inflate(inflater)
+        _binding = FragmentCitiesListBinding.inflate(inflater)
         return binding.root
     }
 
@@ -85,17 +85,17 @@ class CitiesListFragment : Fragment(), OnItemClick {
             is CityListFragmentAppState.SuccessMulti -> {
                 binding.showResult()
                 binding.mainFragmentRecyclerView.adapter =
-                    DetailsListAdapter(cityListFragmentAppState.weatherList, this)
+                    CitiesListAdapter(cityListFragmentAppState.weatherList, this)
             }
         }
     }
 
-    fun FragmentWeatherListBinding.loading() {
+    fun FragmentCitiesListBinding.loading() {
         this.mainFragmentLoadingLayout.visibility = View.VISIBLE
         this.weatherListFragmentFAB.visibility = View.GONE
     }
 
-    fun FragmentWeatherListBinding.showResult() {
+    fun FragmentCitiesListBinding.showResult() {
         this.mainFragmentLoadingLayout.visibility = View.GONE
         this.weatherListFragmentFAB.visibility = View.VISIBLE
     }

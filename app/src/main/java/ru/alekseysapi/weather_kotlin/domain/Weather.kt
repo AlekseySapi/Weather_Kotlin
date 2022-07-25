@@ -6,18 +6,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Weather(
-    val city: City = getDefaultCity(),
+    val city: City,
     var temperature: Int = 20,
-    var feelsLike: Int = 20
+    var feelsLike: Int = 20,
+    var icon: String="ovc_-ra"
 ) : Parcelable
 
 @Parcelize
 data class City(
-    val name: String,
+    var name: String,
     val lat: Double,
     val lon: Double
-) : Parcelable
-
+): Parcelable
 
 fun getWorldCities(): List<Weather> {
     return listOf(
@@ -49,5 +49,4 @@ fun getRussianCities(): List<Weather> {
     )
 }
 
-
-fun getDefaultCity() = City("Москва", 55.755826, 37.617299900000035)
+//fun getDefaultCity() = City("Москва", 55.755826, 37.617299900000035)
