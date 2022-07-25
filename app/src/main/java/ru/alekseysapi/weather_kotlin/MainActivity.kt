@@ -53,6 +53,7 @@ internal class MainActivity : AppCompatActivity() {
             apply()
         }
 
+        val rows=  MyApp.getWeatherDatabase().weatherDao().getWeatherAll()
 
     }
 
