@@ -1,5 +1,6 @@
 package ru.alekseysapi.weather_kotlin.view.details
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -99,7 +100,7 @@ class DetailsFragment : Fragment() {
     fun ImageView.loadUrl(url: String) {
 
         val imageLoader = ImageLoader.Builder(this.context)
-            .componentRegistry{add(SvgDecoder(this@loadUrl.context))}
+            .componentRegistry { add(SvgDecoder(this@loadUrl.context)) }
             .build()
 
         val request = ImageRequest.Builder(this.context)

@@ -1,5 +1,6 @@
 package ru.alekseysapi.weather_kotlin.view.weatherlist
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import ru.alekseysapi.weather_kotlin.view.details.DetailsFragment
 import ru.alekseysapi.weather_kotlin.view.details.OnItemClick
 import ru.alekseysapi.weather_kotlin.viewmodel.citieslist.CitiesListViewModel
 import ru.alekseysapi.weather_kotlin.viewmodel.citieslist.CityListFragmentAppState
+import ru.alekseysapi.weather_kotlin.utils.SP_DB_NAME_IS_RUSSIAN
+import ru.alekseysapi.weather_kotlin.utils.SP_KEY_IS_RUSSIAN
 
 class CitiesListFragment : Fragment(), OnItemClick {
 
@@ -57,6 +60,11 @@ class CitiesListFragment : Fragment(), OnItemClick {
                 viewModel.getWeatherListForWorld()
                 binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
             }
+            val sp = requireActivity().getSharedPreferences(SP_DB_NAME_IS_RUSSIAN,Context.MODE_PRIVATE)
+            val editor = sp.edit()
+            editor.putBoolean(SP_KEY_IS_RUSSIAN,isRussian)
+            editor.commit()
+            editor.apply()
         }
         viewModel.getWeatherListForRussia()
     }
