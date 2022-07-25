@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_details.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.requestPermissions
 import android.widget.TextView
+import kotlin.math.max
 
 
 class ContentProviderFragment : Fragment() {
