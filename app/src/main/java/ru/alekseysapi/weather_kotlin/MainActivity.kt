@@ -13,6 +13,7 @@ import ru.alekseysapi.weather_kotlin.utils.SP_DB_NAME_IS_RUSSIAN
 import ru.alekseysapi.weather_kotlin.utils.SP_KEY_IS_RUSSIAN
 import ru.alekseysapi.weather_kotlin.view.weatherlist.CitiesListFragment
 import ru.alekseysapi.weather_kotlin.view.room.WeatherHistoryListFragment
+import ru.alekseysapi.weather_kotlin.view.contentprovider.ContentProviderFragment
 
 
 internal class MainActivity : AppCompatActivity() {
@@ -70,6 +71,16 @@ internal class MainActivity : AppCompatActivity() {
                 supportFragmentManager.apply {
                     beginTransaction()
                         .replace(R.id.container, WeatherHistoryListFragment())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+
+            R.id.menu_content_provider-> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, (ContentProviderFragment()))
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }
