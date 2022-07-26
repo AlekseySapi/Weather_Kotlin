@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ru.alekseysapi.weather_kotlin.utils.*
 
-
+const val BUNDLE_KEY = "key"
 class MyService:IntentService("") {
 
     override fun onHandleIntent(intent: Intent?) {
