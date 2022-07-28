@@ -1,25 +1,17 @@
 package ru.alekseysapi.weather_kotlin.lesson5
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import ru.alekseysapi.weather_kotlin.R
-import ru.alekseysapi.weather_kotlin.databinding.ActivityMainBinding
 import ru.alekseysapi.weather_kotlin.databinding.ActivityWebviewBinding
-import ru.alekseysapi.weather_kotlin.viewmodel.WeatherListFragment
 import ru.alekseysapi.weather_kotlin.utils.getLines
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
-import java.net.URI
 import java.net.URL
-import java.util.stream.Collectors
-import kotlin.random.Random
 
 
 internal class WebViewActivity : AppCompatActivity() {

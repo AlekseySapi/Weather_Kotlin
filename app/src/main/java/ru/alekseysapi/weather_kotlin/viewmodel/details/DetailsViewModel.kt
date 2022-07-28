@@ -10,7 +10,6 @@ import java.io.IOException
 import ru.alekseysapi.weather_kotlin.MyApp
 import ru.alekseysapi.weather_kotlin.domain.City
 import ru.alekseysapi.weather_kotlin.domain.Weather
-import ru.alekseysapi.weather_kotlin.model.retrofit.RepositoryLocationToOneWeatherRetrofitImpl
 
 class DetailsViewModel(private val liveData: MutableLiveData<DetailsFragmentAppState> = MutableLiveData<DetailsFragmentAppState>()) :
     ViewModel() {

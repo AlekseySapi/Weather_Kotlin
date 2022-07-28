@@ -13,7 +13,7 @@ import ru.alekseysapi.weather_kotlin.domain.Weather
 import ru.alekseysapi.weather_kotlin.view.details.DetailsFragment
 import ru.alekseysapi.weather_kotlin.view.details.OnItemClick
 import ru.alekseysapi.weather_kotlin.viewmodel.citieslist.CitiesListViewModel
-import ru.alekseysapi.weather_kotlin.viewmodel.citieslist.CitiesListFragmentAppState
+import ru.alekseysapi.weather_kotlin.viewmodel.citieslist.CityListFragmentAppState
 import ru.alekseysapi.weather_kotlin.utils.SP_DB_NAME_IS_RUSSIAN
 import ru.alekseysapi.weather_kotlin.utils.SP_KEY_IS_RUSSIAN
 
